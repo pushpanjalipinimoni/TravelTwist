@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TravelTwist</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+      * {
+        box-sizing: border-box;
+      }
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        font-family: "Roboto", sans-serif;
+        color: #fff;
+        scroll-behavior: smooth;
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        transition: background-image 0.7s ease-in-out;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        z-index: -1;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.55);
+        pointer-events: none;
+      }
+      nav {
+        background-color: rgba(0, 0, 0, 0.85);
+        display: flex;
+        justify-content: center;
+        gap: 25px;
+        padding: 12px 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+      }
+      nav a {
+        color: #ddd;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 16px;
+        padding: 8px 16px;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+      }
+      nav a:hover,
+      nav a.active {
+        background-color: #007bff;
+        color: white;
+      }
+      header,
+      section {
+        max-width: 1100px;
+        margin: 20px auto 60px auto;
+        padding: 0 15px;
+      }
+      /* Simple Home Content */
+      .home-simple {
+        text-align: center;
+      }
+      .home-simple h1 {
+        font-size: 3rem;
+        letter-spacing: 2px;
+        text-shadow: 2px 2px 6px #000;
+        margin-bottom: 8px;
+      }
+      .home-simple p {
+        font-size: 1.2rem;
+        color: #ccc;
+        text-shadow: 1px 1px 3px #000;
+      }
+      /* Elegant Home Hero Styles */
+      .home-hero {
+        position: relative;
+        height: 80vh;
+        max-width: none;
+        margin: 0 auto 60px auto;
+        background: rgba(0, 0, 0, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 0 20px;
+        box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.8);
+        overflow: hidden;
+        max-width: 1100px;
+      }
+      .home-content {
+        max-width: 700px;
+        color: #fff;
+        animation: fadeInUp 1.5s ease forwards;
+      }
+      .home-content h1 {
+        font-size: 3.8rem;
+        font-weight: 700;
+        margin-bottom: 0.4rem;
+        letter-spacing: 3px;
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+      }
+      .home-content p {
+        font-size: 1.4rem;
+        line-height: 1.6;
+        margin-bottom: 2rem;
+        color: #d1d9e6cc;
+        text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.6);
+      }
+      #exploreBtn {
+        font-size: 1.2rem;
+        font-weight: 700;
+        background-color: #007bff;
+        color: white;
+        padding: 14px 32px;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        box-shadow: 0 6px 20px rgba(0, 123, 255, 0.6);
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      }
+      #exploreBtn:hover {
+        background-color: #0056b3;
+        box-shadow: 0 8px 30px rgba(0, 86, 179, 0.9);
+      }
+      .home-hero::after {
+        content: "";
+        position: absolute;
+        bottom: 50px;
+        left: 15%;
+        width: 70%;
+        height: 3px;
+        background: linear-gradient(90deg, #007bff, #00d4ff);
+        opacity: 0.7;
+        filter: drop-shadow(0 0 10px #00d4ff);
+        border-radius: 2px;
+      }
+      @keyframes fadeInUp {
+        0% {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      /* Content Sections */
+      h2 {
+        border-bottom: 3px solid #007bff;
+        display: inline-block;
+        padding-bottom: 8px;
+        margin-bottom: 24px;
+        font-weight: 700;
+        font-size: 2em;
+        text-shadow: 1px 1px 4px #000;
+      }
+      .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 24px;
+        justify-content: center;
+      }
+      .card {
+        background: rgba(0, 0, 0, 0.7);
+        width: 280px;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+        transition: transform 0.3s ease;
+      }
+      .card:hover {
+        transform: translateY(-8px);
+      }
+      .card img {
+        width: 100%;
+        height: 160px;
+        object-fit: cover;
+        border-bottom: 2px solid #007bff;
+        display: block;
+      }
+      .card-content {
+        padding: 15px 18px;
+      }
+      .card-content h3 {
+        margin: 0 0 10px 0;
+        font-size: 1.3em;
+        color: #00bfff;
+      }
+      .card-content p {
+        margin: 0 0 8px 0;
+        font-size: 0.95em;
+        color: #ddd;
+      }
+      .rating {
+        color: #ffd700;
+        font-weight: bold;
+      }
+      .food-list {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .food-item {
+        background: rgba(0, 0, 0, 0.7);
+        border-radius: 10px;
+        width: 220px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+        text-align: center;
+        padding-bottom: 15px;
+        cursor: default;
+        user-select: none;
+      }
+      .food-item img {
+        width: 100%;
+        height: 140px;
+        border-radius: 10px 10px 0 0;
+        object-fit: cover;
+      }
+      .food-item h4 {
+        margin: 12px 0 6px 0;
+        color: #00bfff;
+      }
+      .guide {
+        background: rgba(0, 0, 0, 0.75);
+        border-radius: 10px;
+        padding: 15px 20px;
+        margin-bottom: 15px;
+        max-width: 600px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+      }
+      .guide h3 {
+        margin: 0 0 6px 0;
+        color: #00bfff;
+      }
+      .guide p {
+        margin: 0 0 6px 0;
+        color: #ddd;
+      }
+      form {
+        background: rgba(0, 0, 0, 0.8);
+        padding: 20px 25px;
+        border-radius: 10px;
+        max-width: 500px;
+        margin: auto;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.9);
+      }
+      label {
+        display: block;
+        margin-bottom: 15px;
+      }
+      input[type="text"],
+      input[type="email"],
+      input[type="date"],
+      select {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        font-size: 1em;
+      }
+      #signInPage input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        font-size: 1em;
+      }
+      button {
+        background-color: #007bff;
+        color: white;
+        padding: 13px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 1.1em;
+        width: 100%;
+        margin-top: 10px;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+      #signInPage {
+        max-width: 400px;
+        margin: 40px auto;
+        background: rgba(0, 0, 0, 0.85);
+        padding: 30px 25px;
+        border-radius: 12px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8);
+      }
+      #signInPage h2 {
+        color: #00bfff;
+        margin-bottom: 25px;
+        text-align: center;
+      }
+      #signInPage label {
+        margin-bottom: 12px;
+      }
+      #signInPage input {
+        margin-bottom: 20px;
+      }
+      #signInPage button {
+        font-size: 1.1em;
+      }
+      .hidden {
+        display: none;
+      }
+      @media (max-width: 768px) {
+        .card-container {
+          flex-direction: column;
+          align-items: center;
+        }
+        .card,
+        .food-item {
+          width: 90%;
+        }
+        nav {
+          flex-wrap: wrap;
+        }
+      }
+      footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.85);
+        color: #aaa;
+        text-align: center;
+        padding: 12px 0;
+        font-size: 0.9em;
+        box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.9);
+        z-index: 2000;
+      }
+      .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .modal-content {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        width: 300px;
+      }
+      .hidden {
+        display: none;
+      }
+      #guides {
+        position: center;
+      }
+      .guides-layout {
+        display: flex;
+        justify-content:center;
+        align-items: center;
+        gap: 20px;
+        
+      }
+
+      /* Left side - guide list */
+      .guides-list {
+        flex: 2;
+
+      }
+
+      /* Right side - become a guide box */
+      .become-guide-box {
+        flex: 1;
+        background: rgba(0, 0, 0, 0.75);
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+      }
+
+      .become-guide-box button {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+
+      #guideForm label {
+        display: block;
+        margin: 8px 0;
+      }
+
+      #guideForm input {
+        width: 100%;
+        padding: 6px;
+        margin-top: 4px;
+      }
+      /* Guides container layout */
+      #guidesContainer {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+        margin-bottom: 30px;
+      }
+
+      /* Each guide card */
+      #guidesContainer .guide {
+        
+        flex: 1 1 calc(30% - 20px); /* 3 cards per row */
+        max-width: 300px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Become a Guide button + form at bottom */
+      #becomeGuideBtn,
+      #guideForm {
+        display: block;
+        margin: 0 auto;
+        text-align: center;
+      }
+      /* Map Icon below Nav */
+
+      #mapIcon:hover {
+        transform: scale(1.1);
+      }
+      #mapIcon img {
+        position: fixed;
+        top: 80px;
+        right: 25px;
+        background: #3b83ff;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 65px;
+        height: 65px;
+        cursor: pointer;
+        box-shadow: 0 6px 20px rgba(34, 82, 204, 0.6);
+        z-index: 3000;
+        transition: background 0.3s ease, transform 0.2s ease;
+      }
+
+      /* Map Modal (same as before) */
+      #mapModal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 4000;
+      }
+      #mapModal.hidden {
+        display: none;
+      }
+      .map-container {
+        position: relative;
+        background: #fff;
+        padding: 15px;
+        border-radius: 12px;
+        width: 90%;
+        max-width: 600px;
+      }
+      #closeMap {
+        position: absolute;
+        top: 8px;
+        right: 12px;
+        font-size: 28px;
+        cursor: pointer;
+        color: #007bff;
+      }
+      #destinationSearch {
+        margin: 15px 0;
+        text-align: center;
+      }
+
+      #destinationSearch input {
+        width: 60%;
+        max-width: 400px;
+        padding: 10px 15px;
+        border: 2px solid #007bff;
+        border-radius: 25px;
+        font-size: 16px;
+        outline: none;
+        transition: 0.3s ease;
+      }
+
+      #destinationSearch input:focus {
+        border-color: #0056b3;
+        box-shadow: 0 0 8px rgba(0, 123, 255, 0.4);
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden; /* stops sideways scrolling */
+      }
+
+      /* Floating SOS Button */
+      #sosButton {
+        position: fixed;
+        bottom: 80px;
+        right: 20px;
+        background: #ff3b3b;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 65px;
+        height: 65px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 6px 20px rgba(255, 59, 59, 0.6);
+        z-index: 3000;
+        transition: background 0.3s ease, transform 0.2s ease;
+      }
+
+      #sosButton:hover {
+        background: #d32f2f;
+        transform: scale(1.1);
+      }
+
+      /* SOS Modal */
+      .sos-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 4000;
+      }
+
+      .sos-modal-content {
+        background: #fff;
+        color: #333;
+        padding: 25px 30px;
+        border-radius: 12px;
+        text-align: center;
+        max-width: 400px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.9);
+      }
+
+      .sos-modal-content h2 {
+        margin-bottom: 12px;
+        color: #e53935;
+      }
+
+      .sos-modal-content p {
+        margin-bottom: 20px;
+      }
+
+      .sos-modal-content button {
+        padding: 12px 18px;
+        border: none;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        margin: 6px;
+      }
+
+      #confirmSOS {
+        background: #e53935;
+        color: white;
+      }
+
+      #cancelSOS {
+        background: #ccc;
+        color: #000;
+      }
+
+      .hidden {
+        display: none;
+      }
+      #mapContainer {
+        border-radius: 8px;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="#" class="nav-link active" data-target="home">Home</a>
+      <a href="#" class="nav-link" data-target="destinations">Destinations</a>
+      <a href="#" class="nav-link" data-target="flights">Flights</a>
+      <a href="#" class="nav-link" data-target="restaurants">Restaurants</a>
+      <a href="#" class="nav-link" data-target="food">Famous Food</a>
+      <a href="#" class="nav-link" data-target="guides">Guides</a>
+      <a href="#" class="nav-link" data-target="signInPage">Sign In</a>
+    </nav>
+    <!-- Map Icon below Nav -->
+    <div id="mapIcon">
+      <img
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_F_bOnfxGnT7vbtVNMeSqMOdq2vP56O50Tw&s"
+        alt="Map"
+      />
+    </div>
+
+    <!-- Hidden Map Modal -->
+    <div id="mapModal" class="hidden">
+      <div class="map-container">
+        <span id="closeMap">&times;</span>
+        <iframe
+          src="https://www.google.com/maps/embed?pb=..."
+          width="100%"
+          height="300"
+          style="border: 0; border-radius: 10px"
+          allowfullscreen=""
+          loading="lazy"
+        >
+        </iframe>
+      </div>
+    </div>
+
+    <header id="home">
+      <!-- Simple Home Content -->
+      <div id="simpleHome" class="home-simple">
+        <h1>TravelTwist</h1>
+        <p>Explore destinations, book flights, find restaurants & more!</p>
+      </div>
+
+      <!-- Elegant Home Hero (hidden initially) -->
+      <div id="elegantHome" class="home-hero hidden">
+        <div class="home-content">
+          <h1>Welcome to TravelTwist</h1>
+          <p>
+            Your gateway to unforgettable journeys and experiences around the
+            globe.
+          </p>
+          <button id="exploreBtn">Explore Destinations</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="destinations" class="page-section hidden">
+        <h2>Top Destinations</h2>
+        <!-- Search Bar -->
+        <div id="destinationSearch">
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Search destinations..."
+          />
+        </div>
+
+        <div class="card-container" id="destinationsContainer"></div>
+      </section>
+
+      <section id="flights" class="page-section hidden">
+        <h2>Flight Booking</h2>
+        <form id="flightForm">
+          <label for="from">From:</label>
+          <input
+            type="text"
+            id="from"
+            required
+            placeholder="Enter departure city"
+          />
+          <label for="to">To:</label>
+          <input
+            type="text"
+            id="to"
+            required
+            placeholder="Enter destination city"
+          />
+          <label for="departureDate">Departure Date:</label>
+          <input type="date" id="departureDate" required min="" />
+          <button type="submit">Search Flights</button>
+        </form>
+        <div id="flightResults" style="margin-top: 20px"></div>
+      </section>
+
+      <section id="restaurants" class="page-section hidden">
+        <h2>Popular Restaurants</h2>
+        <div class="card-container" id="restaurantsContainer"></div>
+      </section>
+
+      <section id="food" class="page-section hidden">
+        <h2>Famous Food</h2>
+        <div class="food-list" id="foodContainer"></div>
+      </section>
+
+      <section id="guides" class="page-section hidden">
+        <h2>Top Guides (Based on Ratings)</h2>
+        <div class="guides-layout">
+          <!-- Left: Guide Listings -->
+          <div id="guidesContainer" class="guides-list"></div>
+
+          <!-- Right: Become a Guide -->
+          <div class="become-guide-box">
+            <button id="becomeGuideBtn">Become a Guide</button>
+
+            <form id="guideForm" class="hidden">
+              <h3>Register as a Guide</h3>
+              <label>Name: <input type="text" id="guideName" required /></label>
+              <label
+                >Experience: <input type="text" id="guideExperience" required
+              /></label>
+              <label
+                >Languages: <input type="text" id="guideLanguages" required
+              /></label>
+              <label
+                >Pricing (₹/day): <input type="number" id="guidePrice" required
+              /></label>
+              <button type="submit">Add Guide</button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section id="signInPage" class="hidden">
+        <h2>Sign In</h2>
+        <form id="signInForm">
+          <label for="emailSignIn">Email:</label>
+          <input
+            type="email"
+            id="emailSignIn"
+            required
+            placeholder="Enter your email"
+          />
+          <label for="passwordSignIn">Password:</label>
+          <input
+            type="password"
+            id="passwordSignIn"
+            required
+            placeholder="Enter your password"
+          />
+          <button type="submit">Sign In</button>
+        </form>
+        <div
+          id="signInMessage"
+          style="margin-top: 15px; text-align: center"
+        ></div>
+      </section>
+    </main>
+
+    <!-- Floating SOS Button -->
+    <button id="sosButton">SOS</button>
+
+    <!-- SOS Modal with Live Location and Share -->
+    <div id="sosModal" class="sos-modal hidden">
+      <div class="sos-modal-content">
+        <h2>🚨 Emergency SOS</h2>
+        <p>
+          Your location will be shared with local authorities and your emergency
+          contacts.
+        </p>
+        <div
+          id="mapContainer"
+          style="width: 100%; height: 250px; margin-bottom: 15px"
+        ></div>
+        <button id="confirmSOS">Confirm SOS</button>
+        <button id="shareSOS">Share SOS</button>
+        <button id="cancelSOS" class="cancel">Cancel</button>
+      </div>
+    </div>
+
+    <footer>
+      <p>© 2025 TravelTwist. All rights reserved.</p>
+    </footer>
+
+    <script>
+      // Map icon click -> open modal
+      document.getElementById("mapIcon").addEventListener("click", () => {
+        document.getElementById("mapModal").classList.remove("hidden");
+      });
+
+      // Close map
+      document.getElementById("closeMap").addEventListener("click", () => {
+        document.getElementById("mapModal").classList.add("hidden");
+      });
+
+      document
+        .getElementById("searchInput")
+        .addEventListener("keyup", function () {
+          let filter = this.value.toLowerCase();
+          let cards = document.querySelectorAll(".destination-cards .card"); // adjust ".card" if your class name is different
+
+          cards.forEach((card) => {
+            let text = card.textContent.toLowerCase();
+            if (text.includes(filter)) {
+              card.style.display = "";
+            } else {
+              card.style.display = "none";
+            }
+          });
+        });
+
+      // Data
+      const destinations = [
+        {
+          name: "Paris, France",
+          description:
+            "The city of lights, famous for Eiffel Tower and charming streets.",
+          image:
+            "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=800&q=70",
+        },
+        {
+          name: "Tokyo, Japan",
+          description:
+            "A vibrant city blending modern skyscrapers with ancient temples.",
+          image:
+            "https://images.unsplash.com/photo-1557409518-691ebcd96038?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8dG9reW98ZW58MHx8MHx8fDA%3D",
+        },
+        {
+          name: "New York, USA",
+          description:
+            "The city that never sleeps, full of iconic landmarks and culture.",
+          image:
+            "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8bmV3JTIweW9ya3xlbnwwfHwwfHx8MA%3D%3D",
+        },
+      ];
+      const restaurants = [
+        {
+          name: "Le Jules Verne (Paris)",
+          description:
+            "Fine dining experience with a stunning Eiffel Tower view.",
+          image:
+            "https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800&q=70",
+        },
+        {
+          name: "Sukiyabashi Jiro (Tokyo)",
+          description:
+            "World-renowned sushi restaurant with exquisite flavors.",
+          image:
+            "https://eataduck.wordpress.com/wp-content/uploads/2010/08/sukiyabashi-jiro-bar.jpg?w=640",
+        },
+        {
+          name: "Eleven Madison Park (New York)",
+          description: "Modern American cuisine in an elegant setting.",
+          image:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVYtHrf2VVVdc9xs2OZ-0-p11pl0WZymduSA&s",
+        },
+      ];
+      const foods = [
+        {
+          name: "Croissant",
+          image:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPYAPpq6g0V9w7mYqGjF_x5yEEIqF-rywFHQ&s",
+        },
+        {
+          name: "Sushi",
+          image:
+            "https://plus.unsplash.com/premium_photo-1712949141720-6ddee2bde0bf?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8c3VzaGklMjByb2xsc3xlbnwwfHwwfHx8MA%3D%3D",
+        },
+        {
+          name: "New York Cheesecake",
+          image:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1bLZNqgOTW6ayeNKBdZpbmDZMBBWxMdgAEg&s",
+        },
+      ];
+      const guides = [
+        {
+          name: "Alice Johnson",
+          description: "Expert guide of Paris with 10+ years of experience.",
+          rating: 4.9,
+        },
+        {
+          name: "Ken Takahashi",
+          description: "Tokyo local expert with a passion for cultural tours.",
+          rating: 4.8,
+        },
+        {
+          name: "Eva Smith",
+          description: "NYC tour guide specializing in historical landmarks.",
+          rating: 4.7,
+        },
+      ];
+
+      // Elements
+      const destinationsContainer = document.getElementById(
+        "destinationsContainer"
+      );
+      const restaurantsContainer = document.getElementById(
+        "restaurantsContainer"
+      );
+      const foodContainer = document.getElementById("foodContainer");
+      const guidesContainer = document.getElementById("guidesContainer");
+      const flightForm = document.getElementById("flightForm");
+      const flightResults = document.getElementById("flightResults");
+      const signInForm = document.getElementById("signInForm");
+      const signInMessage = document.getElementById("signInMessage");
+      const navLinks = document.querySelectorAll("nav a");
+      const pageSections = document.querySelectorAll(
+        ".page-section, #signInPage, #home"
+      );
+      const simpleHome = document.getElementById("simpleHome");
+      const elegantHome = document.getElementById("elegantHome");
+
+      // Render
+      function renderDestinations() {
+        destinationsContainer.innerHTML = "";
+        destinations.forEach((d) => {
+          const card = document.createElement("div");
+          card.className = "card";
+          card.innerHTML = `<img src="${d.image}" alt="${d.name}" /><div class="card-content"><h3>${d.name}</h3><p>${d.description}</p></div>`;
+          destinationsContainer.appendChild(card);
+        });
+      }
+      function renderRestaurants() {
+        restaurantsContainer.innerHTML = "";
+        restaurants.forEach((r) => {
+          const card = document.createElement("div");
+          card.className = "card";
+          card.innerHTML = `<img src="${r.image}" alt="${r.name}" /><div class="card-content"><h3>${r.name}</h3><p>${r.description}</p></div>`;
+          restaurantsContainer.appendChild(card);
+        });
+      }
+      function renderFoods() {
+        foodContainer.innerHTML = "";
+        foods.forEach((f) => {
+          const foodItem = document.createElement("div");
+          foodItem.className = "food-item";
+          foodItem.innerHTML = `<img src="${f.image}" alt="${f.name}" /><h4>${f.name}</h4>`;
+          foodContainer.appendChild(foodItem);
+        });
+      }
+      function renderGuides() {
+        guidesContainer.innerHTML = "";
+        guides.sort((a, b) => b.rating - a.rating);
+        guides.forEach((g) => {
+          const div = document.createElement("div");
+          div.className = "guide";
+          div.innerHTML = `<h3>${g.name}</h3><p>${
+            g.description
+          }</p><p class="rating">Rating: ${"★".repeat(Math.floor(g.rating))}${
+            g.rating % 1 >= 0.5 ? "½" : ""
+          } (${g.rating.toFixed(1)})</p>`;
+          guidesContainer.appendChild(div);
+        });
+      }
+      // Add new guide
+      const guideForm = document.getElementById("guideForm");
+      const becomeGuideBtn = document.getElementById("becomeGuideBtn");
+
+      becomeGuideBtn.addEventListener("click", () => {
+        guideForm.classList.toggle("hidden");
+      });
+
+      // Handle form submission
+      guideForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const newGuide = {
+          name: document.getElementById("guideName").value,
+          description: document.getElementById("guideExperience").value,
+          rating: 4.5, // default new guide rating
+          languages: document.getElementById("guideLanguages").value,
+          price: document.getElementById("guidePrice").value,
+        };
+
+        guides.push(newGuide);
+        renderGuides();
+        guideForm.reset();
+        guideForm.classList.add("hidden");
+      });
+
+      // Update renderGuides function
+      function renderGuides() {
+        guidesContainer.innerHTML = "";
+        guides.sort((a, b) => b.rating - a.rating);
+        guides.forEach((g) => {
+          const div = document.createElement("div");
+          div.className = "guide";
+          div.innerHTML = `
+      <h3>${g.name}</h3>
+      <p>${g.description}</p>
+      <p><strong>Languages:</strong> ${g.languages || "English"}</p>
+      <p><strong>Price:</strong> ₹${g.price || "N/A"}/day</p>
+      <p class="rating">Rating: ${"★".repeat(Math.floor(g.rating))}${
+            g.rating % 1 >= 0.5 ? "½" : ""
+          } (${g.rating.toFixed(1)})</p>
+      <button onclick="bookGuide('${g.name}')">Book Guide</button>
+    `;
+          guidesContainer.appendChild(div);
+        });
+      }
+
+      // Booking mock
+      function bookGuide(name) {
+        alert(`Booking confirmed with guide: ${name}. (Demo Only)`);
+      }
+
+      // Flight date min
+      function setMinFlightDate() {
+        const today = new Date().toISOString().split("T")[0];
+        document.getElementById("departureDate").min = today;
+      }
+      // Flight form submit
+      flightForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const from = document.getElementById("from").value.trim();
+        const to = document.getElementById("to").value.trim();
+        const date = document.getElementById("departureDate").value;
+        if (!from || !to || !date) return;
+        flightResults.innerHTML = `<p>Searching flights from <strong>${from}</strong> to <strong>${to}</strong> on <strong>${new Date(
+          date
+        ).toDateString()}</strong>...</p>
+    <ul>
+      <li>Flight 1: ${from} → ${to} - 9:00 AM - $320</li>
+      <li>Flight 2: ${from} → ${to} - 1:30 PM - $350</li>
+      <li>Flight 3: ${from} → ${to} - 6:45 PM - $300</li>
+    </ul>`;
+      });
+      // Sign in form
+      signInForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        signInMessage.textContent = "";
+
+        const email = document.getElementById("emailSignIn").value.trim();
+        const password = document.getElementById("passwordSignIn").value.trim();
+
+        if (!email || !password) {
+          signInMessage.style.color = "#ff6b6b";
+          signInMessage.textContent = "Please enter both email and password.";
+          return;
+        }
+
+        // Simulate server response
+        signInMessage.style.color = "#4caf50";
+        signInMessage.textContent = `Welcome back, ${email}! Redirecting to Home...`;
+        signInForm.reset();
+
+        // Wait 1 second (1000ms) before showing home page
+        setTimeout(() => {
+          // Activate Home link
+          const homeLink = [...navLinks].find(
+            (l) => l.getAttribute("data-target") === "home"
+          );
+          if (homeLink) homeLink.click();
+
+          // Show elegant home instead of simple home
+          simpleHome.classList.add("hidden");
+          elegantHome.classList.remove("hidden");
+        }, 1000); // 1000ms = 1 second
+      });
+
+      // Backgrounds
+      const backgrounds = {
+        home: "url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80')",
+        destinations:
+          "url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1470&q=80')",
+        flights:
+          "url('https://images.unsplash.com/photo-1587019158091-1a103c5dd17f?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZmxpZ2h0fGVufDB8fDB8fHww')",
+        restaurants:
+          "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI2pN1-ZI6E1rDwtckZnM85lwGMwi4bQL2Yg&s')",
+        food: "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkQe1Qtmn2pfFCMA-nym2jqDulx7CGaBtqGw&s')",
+        guides:
+          "url('https://static9.depositphotos.com/1000291/1170/i/450/depositphotos_11709956-stock-photo-tourist-travellers-with-map-in.jpg')",
+        signInPage:
+          "url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1470&q=80')",
+      };
+      function updateBackground(sectionId) {
+        const bg = backgrounds[sectionId] || backgrounds.home;
+        document.body.style.backgroundImage = bg;
+      }
+      // Nav links and section toggle
+      navLinks.forEach((link) => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          navLinks.forEach((l) => l.classList.remove("active"));
+          link.classList.add("active");
+          const target = link.getAttribute("data-target");
+          pageSections.forEach((section) => {
+            if (
+              section.id === target ||
+              (target === "home" && section.id === "home")
+            ) {
+              section.classList.remove("hidden");
+              // Toggle home simple/elegant views
+              if (target === "home") {
+                simpleHome.classList.add("hidden");
+                elegantHome.classList.remove("hidden");
+              } else {
+                simpleHome.classList.remove("hidden");
+                elegantHome.classList.add("hidden");
+              }
+              if (target === "home")
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              else section.scrollIntoView({ behavior: "smooth" });
+            } else {
+              section.classList.add("hidden");
+            }
+          });
+          updateBackground(target);
+        });
+      });
+      // Explore button
+      document.getElementById("exploreBtn").addEventListener("click", () => {
+        const destLink = [...navLinks].find(
+          (l) => l.getAttribute("data-target") === "destinations"
+        );
+        if (destLink) destLink.click();
+      });
+      // Init function on load
+      function init() {
+        pageSections.forEach((section) => {
+          if (section.id === "home") section.classList.remove("hidden");
+          else section.classList.add("hidden");
+        });
+        simpleHome.classList.remove("hidden"); // show simple home initially
+        elegantHome.classList.add("hidden"); // hide elegant home initially
+        updateBackground("home");
+      }
+
+      // Initial render
+      renderDestinations();
+      renderRestaurants();
+      renderFoods();
+      renderGuides();
+      setMinFlightDate();
+      init();
+
+      let userLatitude = null;
+      let userLongitude = null;
+
+      const sosButton = document.getElementById("sosButton");
+      const sosModal = document.getElementById("sosModal");
+      const confirmSOS = document.getElementById("confirmSOS");
+      const shareSOS = document.getElementById("shareSOS");
+      const cancelSOS = document.getElementById("cancelSOS");
+
+      // Open modal & fetch live location
+      sosButton.addEventListener("click", () => {
+        sosModal.classList.remove("hidden");
+
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              userLatitude = position.coords.latitude;
+              userLongitude = position.coords.longitude;
+
+              const mapHTML = `<iframe 
+          width="100%" 
+          height="250" 
+          style="border:0" 
+          loading="lazy" 
+          allowfullscreen 
+          src="https://www.google.com/maps?q=${userLatitude},${userLongitude}&hl=es;z=15&output=embed">
+          </iframe>`;
+              document.getElementById("mapContainer").innerHTML = mapHTML;
+            },
+            (error) => {
+              document.getElementById("mapContainer").innerHTML =
+                "<p style='color:red'>Unable to fetch location. Please allow location access.</p>";
+            }
+          );
+        } else {
+          document.getElementById("mapContainer").innerHTML =
+            "<p style='color:red'>Geolocation not supported by your browser.</p>";
+        }
+      });
+
+      // Close modal
+      cancelSOS.addEventListener("click", () =>
+        sosModal.classList.add("hidden")
+      );
+
+      // Confirm SOS (simulate alert to authorities)
+      confirmSOS.addEventListener("click", () => {
+        sosModal.classList.add("hidden");
+        if (userLatitude && userLongitude) {
+          alert(
+            `🚨 SOS Triggered!\nYour location (${userLatitude.toFixed(
+              5
+            )}, ${userLongitude.toFixed(5)}) has been shared with authorities.`
+          );
+        } else {
+          alert("🚨 SOS Triggered!\nLocation not available.");
+        }
+      });
+
+      // Share SOS via email using mailto link
+      /* shareSOS.addEventListener("click", () => {
+  if (userLatitude && userLongitude) {
+    const subject = encodeURIComponent("🚨 SOS Alert!");
+    const body = encodeURIComponent(
+      `Help! My current location: https://www.google.com/maps?q=${userLatitude},${userLongitude}`
+    );
+    // Opens user's default email client with pre-filled message
+    window.location.href = `mailto:emergency@example.com?subject=${subject}&body=${body}`;
+    sosModal.classList.add("hidden");
+  } else {
+    alert(
+      "⚠️ Cannot send SOS. Location not available. Please allow location access."
+    );
+  }
+}); */
+
+      shareSOS.addEventListener("click", () => {
+        if (userLatitude && userLongitude) {
+          const message = encodeURIComponent(
+            `🚨 SOS ALERT! My location: https://www.google.com/maps?q=${userLatitude},${userLongitude}`
+          );
+          // Replace '1234567890' with demo contact
+          window.open(`https://wa.me/123456789?text=${message}`, "_blank");
+        } else {
+          alert(
+            "⚠️ Cannot send SOS. Location not available. Please allow location access."
+          );
+        }
+      });
+    </script>
+  </body>
+</html>
