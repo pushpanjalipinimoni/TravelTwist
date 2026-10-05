@@ -5,6 +5,9 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const db = require("./db");
+const uploadToS3 = require("./s3");
+const multer = require("multer");
+const upload = multer({ storage: multer.memoryStorage() });
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -21,6 +24,26 @@ app.use(express.static(path.join(__dirname, "public")));
 // Dummy in-memory data
 
 // ---------- Routes ---------- //
+
+// S3 image upload
+app.post("/api/upload", upload.single("image"), async (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ error: "Image file is required" });
+  }
+
+  try {
+    const imageUrl = await uploadToS3(req.file);
+    res.json({
+      message: "Image uploaded successfully",
+      imageUrl
+    });
+  } catch (err) {
+    console.error("S3 upload failed:", err.message);
+    res.status(500).json({ error: "Failed to upload image" });
+  }
+});
+
+
 
 // Health check
 app.get("/", (req, res) => {
