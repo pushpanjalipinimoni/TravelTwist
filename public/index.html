@@ -998,7 +998,13 @@
           guideForm.reset();
           guideForm.classList.add("hidden");
 
-          await loadGuides();
+          await fetch("/api/guides")
+            .then((response) => response.json())
+            .then((data) => {
+              guides.length = 0;
+              guides.push(...data);
+              renderGuides();
+            });
         } catch (error) {
           console.error("Guide submission failed:", error);
           alert("Unable to connect to server");
