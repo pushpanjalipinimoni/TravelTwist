@@ -960,21 +960,49 @@
       });
 
       // Handle form submission
-      guideForm.addEventListener("submit", (e) => {
+      guideForm.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        const newGuide = {
-          name: document.getElementById("guideName").value,
-          description: document.getElementById("guideExperience").value,
-          rating: 4.5, // default new guide rating
-          languages: document.getElementById("guideLanguages").value,
-          price: document.getElementById("guidePrice").value,
-        };
+        const name = document.getElementById("guideName").value.trim();
+        const experience = document
+          .getElementById("guideExperience")
+          .value.trim();
+        const languages = document
+          .getElementById("guideLanguages")
+          .value.trim();
+        const price = document.getElementById("guidePrice").value;
 
-        guides.push(newGuide);
-        renderGuides();
-        guideForm.reset();
-        guideForm.classList.add("hidden");
+        try {
+          const response = await fetch("/api/guides", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name,
+              experience,
+              languages,
+              price,
+            }),
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            alert(data.error || "Failed to add guide");
+            return;
+          }
+
+          alert("Guide added successfully!");
+
+          guideForm.reset();
+          guideForm.classList.add("hidden");
+
+          await loadGuides();
+        } catch (error) {
+          console.error("Guide submission failed:", error);
+          alert("Unable to connect to server");
+        }
       });
 
       // Update renderGuides function
