@@ -4,11 +4,11 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const db = require("./db");
 
 const app = express();
 const PORT = process.env.PORT || 5001;
 
-const guides = [];
 
 // Middleware
 app.use(cors());
@@ -56,25 +56,45 @@ app.post("/api/flights", (req, res) => {
 });
 
 // Guides - get all
-app.get("/api/guides", (req, res) => {
-  res.json(guides);
+app.get("/api/guides", async (req, res) => {
+  try {
+    const [rows] = await db.query("SELECT * FROM guides");
+    res.json(rows);
+  } catch (err) {
+    console.error("Failed to fetch guides:", err.message);
+    res.status(500).json({ error: "Failed to fetch guides" });
+  }
 });
 
 // Guides - add new
-app.post("/api/guides", (req, res) => {
+app.post("/api/guides", async (req, res) => {
   const { name, experience, languages, price } = req.body;
+
   if (!name || !experience || !languages || !price) {
     return res.status(400).json({ error: "All fields are required" });
   }
 
-  const newGuide = {
-    name,
-    description: `${experience}, Languages: ${languages}, Price: ₹${price}/day`,
-    rating: 4.5, // default rating
-  };
+  const description = `${experience}, Languages: ${languages}, Price: ₹${price}/day`;
 
-  guides.push(newGuide);
-  res.json({ message: "Guide added successfully", guide: newGuide });
+  try {
+    const [result] = await db.query(
+      "INSERT INTO guides (name, description, rating) VALUES (?, ?, ?)",
+      [name, description, 4.5]
+    );
+
+    res.json({
+      message: "Guide added successfully",
+      guide: {
+        id: result.insertId,
+        name,
+        description,
+        rating: 4.5
+      }
+    });
+  } catch (err) {
+    console.error("Failed to add guide:", err.message);
+    res.status(500).json({ error: "Failed to add guide" });
+  }
 });
 
 // Sign In (dummy auth)
