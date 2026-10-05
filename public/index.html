@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -125,7 +125,9 @@
         border-radius: 30px;
         cursor: pointer;
         box-shadow: 0 6px 20px rgba(0, 123, 255, 0.6);
-        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        transition:
+          background-color 0.3s ease,
+          box-shadow 0.3s ease;
       }
       #exploreBtn:hover {
         background-color: #0056b3;
@@ -366,16 +368,14 @@
       }
       .guides-layout {
         display: flex;
-        justify-content:center;
+        justify-content: center;
         align-items: center;
         gap: 20px;
-        
       }
 
       /* Left side - guide list */
       .guides-list {
         flex: 2;
-
       }
 
       /* Right side - become a guide box */
@@ -385,7 +385,6 @@
         padding: 15px;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-
       }
 
       .become-guide-box button {
@@ -414,7 +413,6 @@
 
       /* Each guide card */
       #guidesContainer .guide {
-        
         flex: 1 1 calc(30% - 20px); /* 3 cards per row */
         max-width: 300px;
         border: 1px solid #ddd;
@@ -448,7 +446,9 @@
         cursor: pointer;
         box-shadow: 0 6px 20px rgba(34, 82, 204, 0.6);
         z-index: 3000;
-        transition: background 0.3s ease, transform 0.2s ease;
+        transition:
+          background 0.3s ease,
+          transform 0.2s ease;
       }
 
       /* Map Modal (same as before) */
@@ -527,7 +527,9 @@
         cursor: pointer;
         box-shadow: 0 6px 20px rgba(255, 59, 59, 0.6);
         z-index: 3000;
-        transition: background 0.3s ease, transform 0.2s ease;
+        transition:
+          background 0.3s ease,
+          transform 0.2s ease;
       }
 
       #sosButton:hover {
@@ -776,7 +778,7 @@
     </div>
 
     <footer>
-      <p>© 2025 TravelTwist. All rights reserved.</p>
+      <p>© 2026 TravelTwist. All rights reserved.</p>
     </footer>
 
     <script>
@@ -889,10 +891,10 @@
 
       // Elements
       const destinationsContainer = document.getElementById(
-        "destinationsContainer"
+        "destinationsContainer",
       );
       const restaurantsContainer = document.getElementById(
-        "restaurantsContainer"
+        "restaurantsContainer",
       );
       const foodContainer = document.getElementById("foodContainer");
       const guidesContainer = document.getElementById("guidesContainer");
@@ -902,7 +904,7 @@
       const signInMessage = document.getElementById("signInMessage");
       const navLinks = document.querySelectorAll("nav a");
       const pageSections = document.querySelectorAll(
-        ".page-section, #signInPage, #home"
+        ".page-section, #signInPage, #home",
       );
       const simpleHome = document.getElementById("simpleHome");
       const elegantHome = document.getElementById("elegantHome");
@@ -988,8 +990,8 @@
       <p><strong>Languages:</strong> ${g.languages || "English"}</p>
       <p><strong>Price:</strong> ₹${g.price || "N/A"}/day</p>
       <p class="rating">Rating: ${"★".repeat(Math.floor(g.rating))}${
-            g.rating % 1 >= 0.5 ? "½" : ""
-          } (${g.rating.toFixed(1)})</p>
+        g.rating % 1 >= 0.5 ? "½" : ""
+      } (${g.rating.toFixed(1)})</p>
       <button onclick="bookGuide('${g.name}')">Book Guide</button>
     `;
           guidesContainer.appendChild(div);
@@ -1014,7 +1016,7 @@
         const date = document.getElementById("departureDate").value;
         if (!from || !to || !date) return;
         flightResults.innerHTML = `<p>Searching flights from <strong>${from}</strong> to <strong>${to}</strong> on <strong>${new Date(
-          date
+          date,
         ).toDateString()}</strong>...</p>
     <ul>
       <li>Flight 1: ${from} → ${to} - 9:00 AM - $320</li>
@@ -1045,7 +1047,7 @@
         setTimeout(() => {
           // Activate Home link
           const homeLink = [...navLinks].find(
-            (l) => l.getAttribute("data-target") === "home"
+            (l) => l.getAttribute("data-target") === "home",
           );
           if (homeLink) homeLink.click();
 
@@ -1108,7 +1110,7 @@
       // Explore button
       document.getElementById("exploreBtn").addEventListener("click", () => {
         const destLink = [...navLinks].find(
-          (l) => l.getAttribute("data-target") === "destinations"
+          (l) => l.getAttribute("data-target") === "destinations",
         );
         if (destLink) destLink.click();
       });
@@ -1163,7 +1165,7 @@
             (error) => {
               document.getElementById("mapContainer").innerHTML =
                 "<p style='color:red'>Unable to fetch location. Please allow location access.</p>";
-            }
+            },
           );
         } else {
           document.getElementById("mapContainer").innerHTML =
@@ -1173,7 +1175,7 @@
 
       // Close modal
       cancelSOS.addEventListener("click", () =>
-        sosModal.classList.add("hidden")
+        sosModal.classList.add("hidden"),
       );
 
       // Confirm SOS (simulate alert to authorities)
@@ -1182,8 +1184,8 @@
         if (userLatitude && userLongitude) {
           alert(
             `🚨 SOS Triggered!\nYour location (${userLatitude.toFixed(
-              5
-            )}, ${userLongitude.toFixed(5)}) has been shared with authorities.`
+              5,
+            )}, ${userLongitude.toFixed(5)}) has been shared with authorities.`,
           );
         } else {
           alert("🚨 SOS Triggered!\nLocation not available.");
@@ -1210,13 +1212,13 @@
       shareSOS.addEventListener("click", () => {
         if (userLatitude && userLongitude) {
           const message = encodeURIComponent(
-            `🚨 SOS ALERT! My location: https://www.google.com/maps?q=${userLatitude},${userLongitude}`
+            `🚨 SOS ALERT! My location: https://www.google.com/maps?q=${userLatitude},${userLongitude}`,
           );
           // Replace '1234567890' with demo contact
           window.open(`https://wa.me/123456789?text=${message}`, "_blank");
         } else {
           alert(
-            "⚠️ Cannot send SOS. Location not available. Please allow location access."
+            "⚠️ Cannot send SOS. Location not available. Please allow location access.",
           );
         }
       });

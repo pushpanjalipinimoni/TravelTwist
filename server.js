@@ -15,10 +15,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
 // Dummy in-memory data
-let guides = [
-  { name: "Alice Johnson", description: "Expert guide in Paris", rating: 4.9 },
-  { name: "Ken Takahashi", description: "Tokyo cultural expert", rating: 4.8 },
-];
 
 // ---------- Routes ---------- //
 
