@@ -1025,7 +1025,7 @@
       <p><strong>Price:</strong> ₹${g.price || "N/A"}/day</p>
       <p class="rating">Rating: ${"★".repeat(Math.floor(g.rating))}${
         g.rating % 1 >= 0.5 ? "½" : ""
-      } (${g.rating.toFixed(1)})</p>
+      } (${Number(g.rating).toFixed(1)})</p>
       <button onclick="bookGuide('${g.name}')">Book Guide</button>
     `;
           guidesContainer.appendChild(div);
